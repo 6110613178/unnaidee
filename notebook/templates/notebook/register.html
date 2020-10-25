@@ -1,6 +1,7 @@
 {% extends 'notebook/layout.html' %}
 
 {% block content %}
+<div class="container">
 <h1 align="center">ลงทะเบียน(Sign in)</h1>
 <form action="{% url 'addregister' %}" method="POST">
     {% csrf_token %}
@@ -29,6 +30,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+</div>
 {% endblock %}
 
 

@@ -1,20 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'notebook/layout.html' %}
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="image/png" rel="icon" href="{% static 'img/laptop.png'%}">
-    <title>UN-NAI-DEE</title>
-    
-</head>
-<body>
+{% block content %}
     <a href="{% url 'about' %}">about</a>
     <br>
     <a href="{% url 'register' %}">register</a>
-    
-  
-    
-</body>
-</html>
+{% endblock %}
