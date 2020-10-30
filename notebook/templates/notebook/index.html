@@ -1,7 +1,29 @@
-{% extends 'notebook/layout.html' %}
-
+{% extends 'notebook/layout02.html' %}
 {% block content %}
-    <a href="{% url 'about' %}">about</a>
-    <br>
-    <a href="{% url 'register' %}">register</a>
+<nav class="navbar">
+  <div class="container-fluid navbar-fixed-top">
+    {{name}}
+    <ul class="navbar-nav"> 
+      <li><a href="{% url 'login_logoutpage' %}">{{log}}</a></li>
+      <li><a href="{% url 'register' %}">register</a></li>
+
+    </ul>
+
+  </div>
+  <div class="container">
+    <div class="navbar-input ">
+      <a class="logo" href="{% url 'index' %}"><img src="../../static/img/logo.png"></a>
+      <div class="search-box">
+        <form action="#" method="POST">
+          {% csrf_token %}
+          <input type="text" name="search-text" placeholder="Search..">
+          <input type="submit" value="search">
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</nav>
+<li><a href="{% url 'about' %}">about</a></li>
 {% endblock %}
