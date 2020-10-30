@@ -20,19 +20,19 @@ def addregister(request):
         name = request.POST['firstname']
         surname = request.POST['lastname']
         email = request.POST['email']
-        password = request.POST['password']
-        confirmpassword = request.POST['confirmpassword']
-        
-        if password == confirmpassword:
+        password1 = request.POST['password']
+        confirmpassword1 = request.POST['confirmpassword']
+
+        if password1 == confirmpassword1:
             userun = UserUn.objects.create(
             firstname = name,
             lastname = surname,
             email = email,
-            password = password
+            password = password,
             )
             user = User.objects.create_user(
             username = email,
-            password = password,
+            password = password
             )
             userun.save()
             user.save()
