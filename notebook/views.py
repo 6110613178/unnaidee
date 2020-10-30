@@ -23,7 +23,7 @@ def addregister(request):
         password = request.POST['password']
         confirmpassword = request.POST['confirmpassword']
 
-        if password1 == confirmpassword1:
+        if password == confirmpassword:
             userun = UserUn.objects.create(
             firstname = name,
             lastname = surname,
