@@ -28,7 +28,7 @@ def addregister(request):
             firstname = name,
             lastname = surname,
             email = email,
-            password = password,
+            password = password
             )
             user = User.objects.create_user(
             username = email,
