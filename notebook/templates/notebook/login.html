@@ -1,5 +1,6 @@
 {% extends "notebook/layout01.html" %}
 {% block content %}
+{{message}}
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <input type="text" name="username">
