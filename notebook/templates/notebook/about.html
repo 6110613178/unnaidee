@@ -7,28 +7,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unnaidee</title>
     <title>Unnaidee</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/about.css'%} ">
+    <link rel="stylesheet" type = "text/css" href="{% static 'css/About.css'%} ">
     <link type="image/png" rel="icon" href="{% static 'img/laptop.png'%}">
     <title>UN-NAI-DEE</title>
-
 </head>
-<body>
-    <h1>About us</h1>
-    <h2>รายชื่อ สมาชิกกลุ่ม UN NAI DEE </h2>
-    <p> 1. 6110490023 : นายเอกนรินทร์ เลิศนันทวัฒน์ </p>
-    <p> 2. 6110613111 : นางสาวชื่นชนก ผิวเกลี้ยง</p>
-    <p> 3. 6110613178 : นายธีรัช ประสิทธิ์เวช</p>
-    <p> 4. 6110613194 : นายภูริณัฐ สุเมธยาจารย์</p>
-    <p> 5. 6110680565 : นายธาม เธียระวิบูลย์</p>
-    <br>
-    <h2>หัวข้อโครงงาน </h2>
-    <p>
-        UN NAI DEE
-    </p>
-    <h2>Links</h2>
-    <a href="https://www.pivotaltracker.com/n/projects/2470755">Tracker</a><br>
-    <a href="https://github.com/eknarin120643/unnaidee">GitHub repository</a><br>
-    <a href="https://unnaidee.herokuapp.com/">heroku</a>
-</body>
 
+<body>
+    <div class = "tab_bar"></div>
+    <div class = "logo"><a href="{% url 'index' %}"><img src="../../static/img/logo.png"></a></div>
+    <p class = "about">ABOUT US</p>
+    <div class = "tell">
+        <p>
+            UNNAIDEE is laptop specfication website and we want to solve the kind of laptop who don't know.
+        </p>
+        <p>
+            This makes it easier for people to decide to buy a laptop and choose the type of laptop that meets their needs.
+        </p>
+    </div>
+    <img class = "img_team1" src = "../../static/img/myteam5.png">
+    <img class = "img_team2" src = "../../static/img/myteam6.png">
+    <img class = "img_team3" src = "../../static/img/myteam7.png">
+    <p class = "list"> List of group members </p>
+
+    <div class = "index">
+        <div class ="form">
+            <img src="../../static/img/nut.png" width="100%">
+            <p> 6110490023 </p>
+            <p>นายเอกนรินทร์ เลิศนันทวัฒน์</p>
+        </div>
+        <div class ="form">
+            <img src="../../static/img/mata.png" width="100%">
+            <p> 6110613111 </p>
+            <p>นางสาวชื่นชนก ผิวเกลี้ยง</p>
+        </div>
+        <div class ="form">
+            <img src="../../static/img/tar.png" width="100%">
+            <p> 6110613178 </p>
+            <p>นายธีรัช ประสิทธิ์เวช</p>
+        </div>
+        <div class ="form">
+            <img src="../../static/img/pong.jpg" width="100%">
+            <p> 6110613194 </p>
+            <p>นายภูริณัฐ สุเมธยาจารย์</p>
+        </div>
+        <div class ="form">
+            <img src="../../static/img/tham.png" width="100%">
+            <p> 6110680565 </p>
+            <p>นายธาม เธียระวิบูลย์</p>
+        </div>
+    </div>
+    <p class = "topic1"> Project topic </p>
+    <p class = "topic2">UN NAI DEE</p>
+    <p class = "linktopic">Links</p>
+    <p class = "link">
+        <a href="https://www.pivotaltracker.com/n/projects/2470755">Tracker</a><br>
+        <a href="https://github.com/eknarin120643/unnaidee">GitHub repository</a><br>
+        <a href="https://unnaidee.herokuapp.com/">heroku</a>
+    </p>
+</body>
 </html>

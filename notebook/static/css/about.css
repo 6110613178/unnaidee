@@ -1,0 +1,81 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.about{
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-weight: bold;
+}
+.logo{
+    margin-left: 100px;
+}
+.logo img {
+    height: 60px;
+
+}
+.tab_bar{
+    height: 42.4px;
+    margin-bottom: 10px;
+    background-color: #66CDAA;
+}
+.img_team1{
+    float: left;
+    width: 33.333%;
+}
+.img_team2{
+    float: middle;
+    width: 33.333%;
+}
+.img_team3{
+    float: right;
+    width: 33.333%;
+}
+.tell{
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+.list{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
+}
+.index{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    padding: 10px;
+    grid-row-gap: 20px;
+  }
+.form{
+    border: 1px solid rgba(105, 105, 105, 0.8);
+    padding: 20px;
+    text-align: center;
+    margin: auto;
+    width: 80%;
+    height: 320px;
+  }
+.topic1{
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.topic2{
+    text-align: center;
+}
+.linktopic{
+    font-size: 24px;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 7px;
+}
+.link{
+    text-align: center;
+}

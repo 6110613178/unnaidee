@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 
 def index(request):
     if request.user.is_authenticated:
-        user1 = UserUn.objects.get(email= request.user.username)
+        user1 = UserUn.objects.get(email = request.user.username)
         return render(request,'notebook/index.html',{"name" : user1,"log": "logout"})
     return render(request,'notebook/index.html',{"log": "login"})
 def about(request):
@@ -22,23 +22,45 @@ def addregister(request):
         email = request.POST['email']
         password = request.POST['password']
         confirmpassword = request.POST['confirmpassword']
-
-        if password == confirmpassword:
-            userun = UserUn.objects.create(
-            firstname = name,
-            lastname = surname,
-            email = email,
-            password = password,
-            )
-            user = User.objects.create_user(
-            username = email,
-            password = password
-            )
-            userun.save()
-            user.save()
-            return render(request,'notebook/login.html')
+        if (name == '')and(surname == '')and(email == '')and(password == '')and(confirmpassword == ''):
+            return render(request, "notebook/register.html", {
+                "message": "Please assign information"
+            })
+        elif name == '':
+            return render(request, "notebook/register.html", {
+                "message": "Please assign Name"
+            })
+        elif surname == '':
+            return render(request, "notebook/register.html", {
+                "message": "Please assign Surname"
+            })
+        elif email == '':
+            return render(request, "notebook/register.html", {
+                "message": "Please assign Email address"
+            })
+        elif password == '':
+            return render(request, "notebook/register.html", {
+                "message": "Please assign Password"
+            })
         else:
-            return render(request,'notebook/register.html')
+            if password == confirmpassword:
+                userun = UserUn.objects.create(
+                firstname = name,
+                lastname = surname,
+                email = email,
+                password = password,
+                )
+                user = User.objects.create_user(
+                username = email,
+                password = password
+                )
+                userun.save()
+                user.save()
+                return render(request,'notebook/login.html')
+            else:
+                return render(request,'notebook/register.html', {
+                    "message": "Confirm Password not correct"
+                })
     return render(request,'notebook/register.html')
 def login_logoutpage(request):
     if request.user.is_authenticated:

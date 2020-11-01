@@ -1,8 +1,10 @@
 {% extends 'notebook/layout01.html' %}
-
 {% block content %}
 <div class="container">
 <h1 align="center">ลงทะเบียน(Sign in)</h1>
+{% if message %}
+<div style="color:red">{{message}}</div>
+{% endif %}
 <form action="{% url 'addregister' %}" method="POST">
     {% csrf_token %}
     

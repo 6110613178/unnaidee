@@ -66,7 +66,8 @@ class UserUn(models.Model):
     lastname = models.CharField(max_length = 64)
     email = models.EmailField(max_length = 64)
     password = models.CharField(max_length = 32)
-    favarite = models.ManyToManyField(NoteBook,related_name="uerfavarite",blank=True)
+    favarite = models.ManyToManyField(NoteBook, related_name="uerfavarite",blank=True)
+    
     def __str__(self):
         return f"{self.firstname} {self.lastname} Email:{self.email}"
 
