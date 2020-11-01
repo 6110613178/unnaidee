@@ -1,15 +1,16 @@
 from django.shortcuts import render
-from .models import UserUn
+from .models import UserUn,NotebookData
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 def index(request):
+    notebook = NotebookData.objects.all()
     if request.user.is_authenticated:
         user1 = UserUn.objects.get(email = request.user.username)
-        return render(request,'notebook/index.html',{"name" : user1,"log": "logout"})
-    return render(request,'notebook/index.html',{"log": "login"})
+        return render(request,'notebook/index.html',{"name" : user1,"log": "logout","notebook":notebook})
+    return render(request,'notebook/index.html',{"log": "login","notebook":notebook})
 def about(request):
     return render(request,'notebook/about.html')
 def register(request):

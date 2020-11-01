@@ -28,5 +28,29 @@
 
 
 </nav>
+<! -- เเสดงโน็ตบุ้คทั้งหมด -->
+  {% for note in notebook %}
+<div class="container">
+  <div class="card flex-row flex-wrap">
+    <div class="card-header border-0">
+        <img src="//placehold.it/200" alt="">
+    </div>
+    <div class="card-block px-2">
+        <h4 class="card-title">{{ note.series }}</h4>
+        <p class="card-text">
+          <li>CPU:</li>
+          <li>GPU:</li>
+          <li>ROM:</li>
+          <li>RAM:</li>
+          <li>DISPLAY:</li>
+          <li>PRICE:</li>
+        </p>
+        <a href="#" class="btn btn-primary">รายละเอียด</a>
+    </div>
+  </div>
+</div>
+<br>
+  {% endfor %}
+<! -- เเสดงโน็ตบุ้คทั้งหมด -->
 <li><a href="{% url 'about' %}">about</a></li>
 {% endblock %}
