@@ -9,7 +9,7 @@ class NotebookData(models.Model):
     series = models.CharField(max_length=64)
     date = models.DateField()
     def __str__(self):
-        return f"{self.brand} >> {self.descrition}>> {self.typeNotebook} >> {self.series} >>{self.date}"
+        return f" brand = {self.brand} : descrition= {self.descrition} : type =  {self.typeNotebook} : s = {self.series} :  date = {self.date}"
 
 class Cpu (models.Model):
     brand = models.CharField(max_length=64)

@@ -1,17 +1,24 @@
 from django.shortcuts import render
-from .models import UserUn
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 def index(request):
+    notebookall = NoteBook.objects.all()
     if request.user.is_authenticated:
         user1 = UserUn.objects.get(email = request.user.username)
-        return render(request,'notebook/index.html',{"name" : user1,"log": "logout"})
-    return render(request,'notebook/index.html',{"log": "login"})
+        return render(request,'notebook/index.html',{
+            "name" : user1,
+            "log": "logout",
+            "notebookall": notebookall
+            })
+    return render(request,'notebook/index.html',{"log": "login","notebookall": notebookall})
+
 def about(request):
     return render(request,'notebook/about.html')
+
 def register(request):
     return render(request,'notebook/register.html')
 
@@ -62,6 +69,7 @@ def addregister(request):
                     "message": "Confirm Password not correct"
                 })
     return render(request,'notebook/register.html')
+
 def login_logoutpage(request):
     if request.user.is_authenticated:
         logout(request)
@@ -82,5 +90,3 @@ def login_view(request):
             })
     return render(request, "notebook/login.html")
 
-
-    

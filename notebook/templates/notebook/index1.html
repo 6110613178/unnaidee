@@ -1,0 +1,43 @@
+{% extends 'notebook/layout02.html' %}
+{% block content %}
+<nav class="navbar">
+  <div class="container-fluid navbar-fixed-top">
+    {{name}}
+    <ul class="navbar-nav"> 
+      <li><a href="{% url 'login_logoutpage' %}">{{log}}</a></li>
+      <li><a href="{% url 'register' %}">register</a></li>
+    </ul>
+  </div>
+  <div class="container">
+
+    <div class="navbar-input ">
+      <a class="logo" href="{% url 'index' %}"><img src="../../static/img/logo.png"></a>
+      <div class="search-box">
+        <form action="#" method="POST">
+          {% csrf_token %}
+          <input type="text" name="search-text" placeholder="Search..">
+          <input type="submit" value="search">
+        </form>
+      </div>
+    </div>
+    <div class = "navbar-manu">
+      <a href="#">compare</a>
+      <a href="#">my Favarite </a>
+    </div>
+
+    <!--container-->
+  </div>
+</nav>
+<div class="container">
+  {% for notebook in notebookall %}
+  <div class="box"> 
+    <ul>
+      <li><a class = "name-notebook">{{notebook.notebookdata.brand}}</a></li> <br>
+
+    </ul>
+    {% endfor %}
+  </div>
+</div>
+
+<li><a href="{% url 'about' %}">about</a></li>
+{% endblock %}
