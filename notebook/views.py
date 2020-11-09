@@ -5,16 +5,22 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
-def index(request):
-    notebookall = NoteBook.objects.all()
+
+def layout(request):
     if request.user.is_authenticated:
         user1 = UserUn.objects.get(email = request.user.username)
-        return render(request,'notebook/index.html',{
+        return {
             "name" : user1,
             "log": "logout",
-            "notebookall": notebookall
-            })
-    return render(request,'notebook/index.html',{"log": "login","notebookall": notebookall})
+            }
+    return{"log": "login"}
+
+def index(request):
+    notebookall = NoteBook.objects.all()
+    b = layout(request)
+    b['notebookall']= notebookall
+    return render(request,'notebook/index.html',b)
+
 
 def about(request):
     return render(request,'notebook/about.html')
@@ -73,7 +79,7 @@ def addregister(request):
 def login_logoutpage(request):
     if request.user.is_authenticated:
         logout(request)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect('/')
     return render(request, 'notebook/login.html')
 
 def login_view(request):
@@ -83,10 +89,13 @@ def login_view(request):
         user = authenticate(request, username = username, password = password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect('/')
         else:
             return render(request, "notebook/login.html", {
                 "message": "Invalid credentials"
             })
     return render(request, "notebook/login.html")
 
+def compare(request):
+    b = layout(request)
+    return render(request,'notebook/compare.html',b)

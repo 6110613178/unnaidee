@@ -451,10 +451,12 @@ textarea.input {
 
 .header-logo {
   float: left;
+  padding-top: 12px;
 }
 
 .header-logo .logo img {
   display: block;
+  width: 180px;
 }
 
 /*----------------------------*\
