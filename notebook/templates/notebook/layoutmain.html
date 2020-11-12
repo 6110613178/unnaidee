@@ -57,7 +57,7 @@
 				<!-- LOGO -->
 				<div class="col-md-2">
 					<div class="header-logo">
-						<a href="#" class="logo">
+						<a href="{% url 'index' %}" class="logo">
 							<img src="{% static 'img/logo7.png'%}" alt="" >
 						</a>
 					</div>
@@ -85,9 +85,9 @@
 					<div class="header-ctn">
 						<!-- Wishlist -->
 						<div>
-							<a href="#">
+							<a href="{% url 'favorite' %}">
 								<i class="fa fa-heart-o"></i>
-								<span>Your favarite</span>
+								<span>Your favorite</span>
 								<div class="qty">3</div>
 							</a>
 						</div>

@@ -9,16 +9,16 @@
 		<!-- row -->
 
 		<div class="row">
-			{% for notebook in notebookall %}
+			{% for notebook in notebookallfav %}
 			<a href="#">
 				<div class="col-md-4 ">
 					Brand : {{ notebook.notebookdata.brand}} <br>
 					Series : {{ notebook.notebookdata.series}}<br>
 					Descrition : {{notebook.notebookdata.descrition}}<br>
 					TypeNotebook : {{notebook.notebookdata.typeNotebook}}<br>
-					<form action="{% url 'mark' %}" method="POST">
+					<form action="{% url 'unmarkfav' %}" method="POST">
 						{%csrf_token%}
-						<button name="series" value="{{ notebook.notebookdata.series }}" type='submit'> Add to Favorite</button>
+						<button name="series" value="{{ notebook.notebookdata.series }}" type='submit'> Unfavorite </button>
 					</form>
 				</div>
 			</a>

@@ -79,7 +79,7 @@ def addregister(request):
 def login_logoutpage(request):
     if request.user.is_authenticated:
         logout(request)
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('index'))
     return render(request, 'notebook/login.html')
 
 def login_view(request):
@@ -89,7 +89,7 @@ def login_view(request):
         user = authenticate(request, username = username, password = password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('index'))
         else:
             return render(request, "notebook/login.html", {
                 "message": "Invalid credentials"
@@ -99,3 +99,44 @@ def login_view(request):
 def compare(request):
     b = layout(request)
     return render(request,'notebook/compare.html',b)
+
+def favorite(request):
+    if not request.user.is_authenticated:
+        return render(request, "notebook/login.html")
+    else:
+        user1 = UserUn.objects.get(email = request.user.username)
+        notebookallfav = user1.favorite.all()
+        b = layout(request)
+        b['notebookallfav']= notebookallfav
+        return render(request,'notebook/favorite.html',b)
+    return HttpResponseRedirect(reverse('index'))
+
+def mark(request):
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            return render(request, "notebook/login.html")
+        else:
+            series = request.POST["series"]
+            user1 = UserUn.objects.get(email = request.user.username)
+            notebookdata = NotebookData.objects.get(series = series)
+            notebook = NoteBook.objects.get(notebookdata = notebookdata)
+            notebooks = user1.favorite.all()
+            for x in notebooks:
+                if x == notebook:
+                    return HttpResponseRedirect(reverse('index'))
+            user1.favorite.add(notebook)
+            return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('index'))
+
+def unmarkfav(request):
+    if request.method == "POST":
+        series = request.POST["series"]
+        user1 = UserUn.objects.get(email = request.user.username)
+        notebookdata = NotebookData.objects.get(series = series)
+        notebook = NoteBook.objects.get(notebookdata = notebookdata)
+        user1.favorite.remove(notebook)
+        notebookallfav = user1.favorite.all()
+        b = layout(request)
+        b['notebookallfav']= notebookallfav
+        return HttpResponseRedirect(reverse('favorite'),b)
+    return HttpResponseRedirect(reverse('index'))
