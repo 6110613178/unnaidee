@@ -7,24 +7,33 @@
 	<!-- container -->
 	<div class="container">
 		<!-- row -->
-
 		<div class="row">
 			{% for notebook in notebookallfav %}
-			<a href="#">
-				<div class="col-md-4 ">
-					Brand : {{ notebook.notebookdata.brand}} <br>
-					Series : {{ notebook.notebookdata.series}}<br>
-					Descrition : {{notebook.notebookdata.descrition}}<br>
-					TypeNotebook : {{notebook.notebookdata.typeNotebook}}<br>
-					<form action="{% url 'unmarkfav' %}" method="POST">
-						{%csrf_token%}
-						<button name="series" value="{{ notebook.notebookdata.series }}" type='submit'> Unfavorite </button>
-					</form>
-				</div>
-			</a>
+			<div class="col-md-4 ">
+				<form id="form-id_{{notebook.id}}" action="{% url 'notebook' %}" method="POST">
+					{%csrf_token%}
+					<input type="hidden" value="{{notebook.id}}" name="notebook_id">
+					<a href="#" onclick="document.getElementById('form-id_{{notebook.id}}').submit();">
+						
+						id : {{ notebook.id}} <br>
+						Brand : {{ notebook.notebookdata.brand}} <br>
+						Series : {{ notebook.notebookdata.series}}<br>
+						Descrition : {{notebook.notebookdata.descrition}}<br>
+						TypeNotebook : {{notebook.notebookdata.typeNotebook}}<br>
+
+					</a>
+					
+				</form>
+				<form action="{% url 'unmarkfav' %}" method="POST">
+					{%csrf_token%}
+					<button name="series" value="{{ notebook.notebookdata.series }}" type='submit'> Unfavorite </button>
+				</form>
+			</div>
 			{% endfor %}
 		</div>
 		<!-- /row -->
+		
+		
 	</div>
 	<!-- /container -->
 </div>
