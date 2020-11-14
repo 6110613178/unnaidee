@@ -55,8 +55,9 @@ class NoteBook (models.Model):
     ram = models.ForeignKey(Ram,on_delete= models.CASCADE)
     display = models.ForeignKey(Display,on_delete= models.CASCADE)
     price = models.PositiveIntegerField()
+    
     def __str__(self):
-        return f"{self.notebookdata} >>{self.cpu} >> {self.gpu} >>{self.rom}>>{self.ram}>>{self.display}>>{self.price}"
+        return f" data :: {self.notebookdata.brand} {self.notebookdata.series} | cpu :: {self.cpu.brand} {self.cpu.name} | gpu :: {self.gpu.brand} {self.gpu.name} | rom :: {self.rom.capacity} ram :: {self.ram.capacity}"
 
 
 
@@ -70,6 +71,3 @@ class UserUn(models.Model):
     
     def __str__(self):
         return f"{self.firstname} {self.lastname} Email:{self.email}"
-
-
-

@@ -145,5 +145,7 @@ def notebook_page(request):
     if request.method == "POST":
         notebook_id = request.POST['notebook_id']
         notebook = NoteBook.objects.get(id = notebook_id)
-        return render(request,'notebook/notebookpage.html',{"notebook": notebook })
+        b = layout(request)
+        b['notebook']= notebook
+        return render(request,'notebook/notebookpage.html',b)
     return HttpResponseRedirect(reverse('index'))
