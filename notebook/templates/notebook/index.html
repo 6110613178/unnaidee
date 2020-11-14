@@ -27,7 +27,7 @@
 				</form>
 				<form action="{% url 'mark' %}" method="POST">
 					{%csrf_token%}
-					<button name="series" value="{{ notebook.notebookdata.series }}" type='submit'> Add to
+					<button name="id" value="{{notebook.id}}" type='submit'> Add to
 						Favorite</button>
 				</form>
 			</div>

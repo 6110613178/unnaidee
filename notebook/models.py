@@ -10,13 +10,17 @@ class NotebookData(models.Model):
     date = models.DateField()
     def __str__(self):
         return f" brand = {self.brand} : descrition= {self.descrition} : type =  {self.typeNotebook} : s = {self.series} :  date = {self.date}"
-
+    def getsearch(self):
+        return f"{self.brand}{self.descrition}{self.typeNotebook}{self.series}{self.date}"
+   
 class Cpu (models.Model):
     brand = models.CharField(max_length=64)
     name = models.CharField(max_length=64)
     star =models.PositiveIntegerField()
     def __str__(self):
-        return f"{self.brand} >>{self.name} >> {self.star}"
+        return f"{self.brand} >> {self.name} >> {self.star}"
+    def getsearch(self):
+        return f"{self.brand}{self.name}{self.star}"
 
 class Gpu (models.Model):
     brand = models.CharField(max_length=64)
@@ -24,20 +28,25 @@ class Gpu (models.Model):
     star =models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.brand} >>{self.name} >> {self.star}"
-
+        return f"{self.brand} >> {self.name} >> {self.star}"
+    def getsearch(self):
+        return f"{self.brand}{self.name}{self.star}"
 
 class Rom (models.Model):
     capacity = models.CharField(max_length=64)
     star =models.PositiveIntegerField()
     def __str__(self):
         return f"{self.capacity} >> {self.star}"
+    def getsearch(self):
+        return f"{self.capacity}{self.star}"
 
 class Ram (models.Model):
     capacity = models.CharField(max_length=64)
     star =models.PositiveIntegerField()
     def __str__(self):
         return f"{self.capacity} >> {self.star}"
+    def getsearch(self):
+        return f"{self.capacity}{self.star}"
 
 class Display (models.Model):
     size = models.CharField(max_length=64)
@@ -46,6 +55,8 @@ class Display (models.Model):
 
     def __str__(self):
         return f"{self.size} >>{self.resolution} >> {self.star}"
+    def getsearch(self):
+        return f"{self.size}{self.resolution}{self.star}"
 
 class NoteBook (models.Model):
     notebookdata = models.ForeignKey(NotebookData,on_delete= models.CASCADE)
@@ -59,7 +70,13 @@ class NoteBook (models.Model):
     def __str__(self):
         return f" data :: {self.notebookdata.brand} {self.notebookdata.series} | cpu :: {self.cpu.brand} {self.cpu.name} | gpu :: {self.gpu.brand} {self.gpu.name} | rom :: {self.rom.capacity} ram :: {self.ram.capacity}"
 
-
+    def search(self,input):
+        s = self.notebookdata.getsearch()+self.notebookdata.getsearch()+self.cpu.getsearch()+self.gpu.getsearch()+self.rom.getsearch()+self.ram.getsearch()+self.display.getsearch()
+        s = s.lower()
+        e = s.find(input)
+        if e== -1:
+            return False
+        return True
 
 
 class UserUn(models.Model):
@@ -71,3 +88,5 @@ class UserUn(models.Model):
     
     def __str__(self):
         return f"{self.firstname} {self.lastname} Email:{self.email}"
+    def getsearch(self):
+        return f"{self.firstname}{self.lastname}{self.email}"

@@ -9,9 +9,11 @@ from django.http import HttpResponseRedirect
 def layout(request):
     if request.user.is_authenticated:
         user1 = UserUn.objects.get(email = request.user.username)
+        countfav = user1.favorite.all().count()
         return {
             "name" : user1,
             "log": "logout",
+            "countfav": countfav
             }
     return{"log": "login"}
 
@@ -116,10 +118,9 @@ def mark(request):
         if not request.user.is_authenticated:
             return render(request, "notebook/login.html")
         else:
-            series = request.POST["series"]
+            idnotebook = request.POST["id"]
             user1 = UserUn.objects.get(email = request.user.username)
-            notebookdata = NotebookData.objects.get(series = series)
-            notebook = NoteBook.objects.get(notebookdata = notebookdata)
+            notebook = NoteBook.objects.get(id = idnotebook )
             notebooks = user1.favorite.all()
             for x in notebooks:
                 if x == notebook:
@@ -130,10 +131,9 @@ def mark(request):
 
 def unmarkfav(request):
     if request.method == "POST":
-        series = request.POST["series"]
+        idnotebook = request.POST["id"]
         user1 = UserUn.objects.get(email = request.user.username)
-        notebookdata = NotebookData.objects.get(series = series)
-        notebook = NoteBook.objects.get(notebookdata = notebookdata)
+        notebook = NoteBook.objects.get(id = idnotebook)
         user1.favorite.remove(notebook)
         notebookallfav = user1.favorite.all()
         b = layout(request)
@@ -149,3 +149,18 @@ def notebook_page(request):
         b['notebook']= notebook
         return render(request,'notebook/notebookpage.html',b)
     return HttpResponseRedirect(reverse('index'))
+
+def search(request):
+    b = layout(request)
+    input = request.POST['input']
+    input = input.lower()
+    notebookall = NoteBook.objects.all()
+    notebooklist = []
+    c = 0
+    for notebook in notebookall:
+        if notebook.search(input):
+            notebooklist.append(notebook)
+            c = c+1
+    b['notebooklist']= notebooklist 
+    b['c'] = c       
+    return render(request,'notebook/search.html',b)

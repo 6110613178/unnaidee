@@ -1,17 +1,18 @@
 {% extends 'notebook/layoutmain.html' %}
 {% block content %}
 {% load static %}
-
+find {{c}} item
 <!-- SECTION -->
 <div class="section">
 	<!-- container -->
 	<div class="container">
 		<!-- row -->
 		<div class="row">
-			{% for notebook in notebookallfav %}
+			{% for notebook in notebooklist %}
 			<div class="col-md-4 ">
 				<form id="form-id_{{notebook.id}}" action="{% url 'notebook' %}" method="POST">
 					{%csrf_token%}
+
 					<input type="hidden" value="{{notebook.id}}" name="notebook_id">
 					<a href="#" onclick="document.getElementById('form-id_{{notebook.id}}').submit();">
 						
@@ -22,18 +23,17 @@
 						TypeNotebook : {{notebook.notebookdata.typeNotebook}}<br>
 
 					</a>
-					
+
 				</form>
-				<form action="{% url 'unmarkfav' %}" method="POST">
+				<form action="{% url 'mark' %}" method="POST">
 					{%csrf_token%}
-					<button name="id" value="{{notebook.id}}" type='submit'> Unfavorite </button>
+					<button name="id" value="{{ notebook.id }}" type='submit'> Add to
+						Favorite</button>
 				</form>
 			</div>
 			{% endfor %}
 		</div>
 		<!-- /row -->
-		
-		
 	</div>
 	<!-- /container -->
 </div>

@@ -11,5 +11,6 @@ urlpatterns = [
     path('mark',views.mark, name='mark'),
     path('favorite',views.favorite, name='favorite'),
     path('unmarkfav',views.unmarkfav, name='unmarkfav'),
-    path('notebook',views.notebook_page,name = 'notebook')
+    path('notebook',views.notebook_page,name = 'notebook'),
+    path('search',views.search, name='search'),
 ]
