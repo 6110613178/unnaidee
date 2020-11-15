@@ -87,7 +87,10 @@
 							<a href="{% url 'favorite' %}">
 								<i class="fa fa-heart-o"></i>
 								<span>Your favorite</span>
+								{% if countfav %}
+								
 								<div class="qty"> {{countfav}} </div>
+								{% endif %}
 							</a>
 						</div>
 						<!-- /Wishlist -->
