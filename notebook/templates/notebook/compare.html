@@ -11,8 +11,8 @@
                     <option>Select</option>
                     {% for notebook in notebookall %}
 
-                    <option value={{notebook.id}}>{{notebook.notebookdata.brand}} {{notebook.notebookdata.series}}
-                    </option>
+                    <option value={{notebook.id}}><option value={{notebook.id}}>{{notebook.notebookdata.brand}} {{notebook.notebookdata.series}}/CPU: {{notebook.cpu.brand}} {{notebook.cpu.name}}/RAM: {{notebook.ram.capacity}} GB/ROM:{{notebook.rom.capacity}} GB GPU: {{notebook.gpu.brand}} {{notebook.gpu.name}}/DISPLAY: {{notebook.display.size}} Inch/{{notebook.display.resolution}}</option>
+                   
                     {% endfor %}
                 </select>
             </form>
