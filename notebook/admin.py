@@ -9,7 +9,7 @@ admin.site.register(Ram)
 admin.site.register(Rom)
 admin.site.register(NotebookData)
 admin.site.register(NoteBook)
-
+admin.site.register(Compare)
 
 
 

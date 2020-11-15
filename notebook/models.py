@@ -90,3 +90,10 @@ class UserUn(models.Model):
         return f"{self.firstname} {self.lastname} Email:{self.email}"
     def getsearch(self):
         return f"{self.firstname}{self.lastname}{self.email}"
+
+class Compare(models.Model):
+    allstar = models.FloatField()
+    notebook = models.OneToOneField(NoteBook,on_delete= models.CASCADE)
+    
+    def __str__(self):
+        return f"{self.notebook} {self.allstar}"

@@ -1,11 +1,51 @@
 {% extends 'notebook/layoutmain.html' %}
 {% block content %}
+<br>
 <div class="container">
-    <select class="form-control form-control-lg" width =45px>
-        <option>Large select</option>
-      </select>
-    <select name ="laptop2">
-        <option value="swift 3"> Swift 3 </option>
-    </select>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form action="{% url 'calcompare'%}" method="POST">
+                {% csrf_token %}
+                <select class="form-control form-control-lg" onchange="this.form.submit()" name="notebook_id">
+                    <option>Select</option>
+                    {% for notebook in notebookall %}
+
+                    <option value={{notebook.id}}>{{notebook.notebookdata.brand}} {{notebook.notebookdata.series}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="row c">
+        {%for l in compares%}
+        <div class="col-md-3 card">
+            <form action="{% url 'removecompare'%}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="close" aria-label="Close" name="rmcompare" value={{l.notebook.id}}>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </form>
+            <div class="img-cad">
+                <img src="../../static/img/Nitro 5.jpg" alt="notebook{{l.notebook_id}}">
+            </div>
+            <div class="card-body tex">
+                <p class="card-text">PRICE : {{l.notebook.price}} Baht</p>
+                <p class="card-text">CPU : {{l.notebook.cpu.brand}} {{l.notebook.cpu.name}}</p>
+                <p class="card-text">GPU : {{l.notebook.gpu.brand}} {{l.notebook.gpu.name}}</p>
+                <p class="card-text">RAM : {{l.notebook.ram.capacity}} GB</p>
+                <p class="card-text">ROM : {{l.notebook.rom.capacity}} GB</p>
+                <p class="card-text">DISPLAY : {{l.notebook.display.size}} Inch</p>
+                <p class="card-text">RESOLUTION : {{l.notebook.display.resolution}}</p>
+                <p class="card-text">SCORE : {{l.allstar}}/5.0 star</p>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+
 </div>
+<br>
 {% endblock %}

@@ -1,43 +1,51 @@
-{% extends 'notebook/layout01.html' %}
+{% extends "notebook/layoutlogin-register.html" %}
 {% block content %}
+
+
 <div class="container">
-<h1 align="center">ลงทะเบียน(Sign in)</h1>
-{% if message %}
-<div style="color:red">{{message}}</div>
-{% endif %}
-<form action="{% url 'addregister' %}" method="POST">
-    {% csrf_token %}
-    
-    <div class="row">
-        <div class="col">
-            <label>Name</label>
-            <input type="text" class="form-control" placeholder="First Name" name="firstname">
+    <form action="{% url 'addregister' %}" method="POST" class="form">
+        {% csrf_token %}
+        <h2>Register With Us</h2>
+        {% if message%}
+        <h3>{{message}}</h3>
+        {%endif%}
+        <div class="form-control">
+            <label for="username">Name</label>
+            <input type="text" placeholder="Enter name" name="firstname">
+            {% if errorname%}
+            <h5>{{errorname}}</h5>
+            {%endif%}
         </div>
-        <div class="col">
-            <label>Surname</label>
-            <input type="text" class="form-control" placeholder="Last Name" name="lastname">
+        <div class="form-control">
+            <label for="username">Surname</label>
+            <input type="text" placeholder="Enter surname" name="lastname">
+            {% if errorsurname%}
+            <h5>{{errorsurname}}</h5>
+            {%endif%}
         </div>
-    </div>
-    <div class="form-group">
-        <label>Email address</label>
-        <input type="email" class="form-control" placeholder="name@example.com" name="email">
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        <input type="password" class="form-control" placeholder="Password" name="password">
-    </div>
-    <div class="form-group">
-        <label>Confirm Password</label>
-        <input type="password" class="form-control" placeholder="Password" name="confirmpassword">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+
+        <div class="form-control">
+            <label for="email">Email</label>
+            <input type="email" placeholder="Enter email" name="email">
+            {% if erroremail%}
+            <h5>{{erroremail}}</h5>
+            {%endif%}
+        </div>
+        <div class="form-control">
+            <label for="password">Password</label>
+            <input type="password" placeholder="Enter password" name="password">
+            {% if errorpassword%}
+            <h5>{{errorpassword}}</h5>
+            {%endif%}
+        </div>
+        <div class="form-control">
+            <label for="password2">Confirm Password</label>
+            <input type="password" placeholder="Enter password again" name="confirmpassword">
+            {% if errorconfirmpassword%}
+            <h5>{{errorconfirmpassword}}</h5>
+            {%endif%}
+        </div>
+        <button type="submit">Submit</button>
+    </form>
 </div>
 {% endblock %}
-
-
-
-
-
-
-

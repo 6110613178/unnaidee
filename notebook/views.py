@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -37,46 +37,28 @@ def addregister(request):
         email = request.POST['email']
         password = request.POST['password']
         confirmpassword = request.POST['confirmpassword']
-        if (name == '')and(surname == '')and(email == '')and(password == '')and(confirmpassword == ''):
-            return render(request, "notebook/register.html", {
-                "message": "Please assign information"
-            })
-        elif name == '':
-            return render(request, "notebook/register.html", {
-                "message": "Please assign Name"
-            })
-        elif surname == '':
-            return render(request, "notebook/register.html", {
-                "message": "Please assign Surname"
-            })
-        elif email == '':
-            return render(request, "notebook/register.html", {
-                "message": "Please assign Email address"
-            })
-        elif password == '':
-            return render(request, "notebook/register.html", {
-                "message": "Please assign Password"
-            })
-        else:
-            if password == confirmpassword:
-                userun = UserUn.objects.create(
-                firstname = name,
-                lastname = surname,
-                email = email,
-                password = password,
-                )
-                user = User.objects.create_user(
-                username = email,
-                password = password
-                )
+        b = {}
+        if name == '':
+            b["errorname"]="Please assign Name"
+        if surname == '':
+            b["errorsurname"]="Please assign Surname"
+        if email == '':
+            b["erroremail"]="Please assign Email address"
+        if password == '':
+            b["errorpassword"]="Please assign Password"
+        if (password == confirmpassword and password != '' and confirmpassword != '' and name != '' and surname != '' and email != ''): 
+            if(UserUn.objects.filter(email = email).count() ==0):
+
+                userun = UserUn.objects.create(firstname = name,lastname = surname,email = email,password = password,)
+                user = User.objects.create_user(username = email,password = password)
                 userun.save()
                 user.save()
                 return render(request,'notebook/login.html')
             else:
-                return render(request,'notebook/register.html', {
-                    "message": "Confirm Password not correct"
-                })
-    return render(request,'notebook/register.html')
+                return render(request,'notebook/register.html',{'message':"email are used"})
+        else:
+            b["message"]: "Confirm Password not correct"
+    return render(request,'notebook/register.html',b)
 
 def login_logoutpage(request):
     if request.user.is_authenticated:
@@ -99,8 +81,33 @@ def login_view(request):
     return render(request, "notebook/login.html")
 
 def compare(request):
+    notebookall = NoteBook.objects.all()
+    compares = Compare.objects.all()
     b = layout(request)
+    b['compares']= compares
+    b['notebookall']= notebookall
+    
     return render(request,'notebook/compare.html',b)
+
+def calcompare(request):
+    keynotebookobj = request.POST['notebook_id']
+    noteobj = NoteBook.objects.get(id = keynotebookobj)
+    cpustar = noteobj.cpu.star
+    displaystar = noteobj.display.star
+    gpustar = noteobj.gpu.star
+    ramstar = noteobj.ram.star
+    romstar = noteobj.rom.star
+    allstar = (cpustar+gpustar+displaystar+ramstar+romstar)/5.0
+    if (Compare.objects.filter(notebook = noteobj).count() == 0):
+        saveobj = Compare.objects.create(notebook = noteobj,allstar = allstar)
+        
+    return redirect('compare')
+
+def removecompare(request):
+    keyobj = request.POST['rmcompare']
+    obj = Compare.objects.get(notebook__id = keyobj)
+    obj.delete()
+    return redirect('compare')
 
 def favorite(request):
     if not request.user.is_authenticated:
