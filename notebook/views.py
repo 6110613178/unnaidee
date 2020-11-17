@@ -20,8 +20,30 @@ def layout(request):
 def index(request):
     notebookall = NoteBook.objects.all()
     b = layout(request)
-    b['notebookall']= notebookall
-    return render(request,'notebook/index.html',b)
+    if request.method == 'POST':
+        f= request.POST["form"]
+        if f == "search":
+            input = request.POST['input']
+            input = input.lower()
+            notebookall = NoteBook.objects.all()
+            notebooklist = []
+            c = 0
+            for notebook in notebookall:
+                if notebook.search(input):
+                    notebooklist.append(notebook)
+                    c = c+1
+            b['notebookall']= notebooklist 
+            if c==0:
+                b['item'] = "Not found"
+            elif c==1:
+                b['item'] = "found "+str(c)+" item"
+            else :
+                b['item'] = "found "+str(c)+" items"      
+            return render(request,'notebook/index.html',b)
+
+    else :
+        b['notebookall']= notebookall
+        return render(request,'notebook/index.html',b)
 
 
 def about(request):
@@ -170,4 +192,4 @@ def search(request):
             c = c+1
     b['notebooklist']= notebooklist 
     b['c'] = c       
-    return render(request,'notebook/search.html',b)
+    return render(request,'notebook/index.html',b)
