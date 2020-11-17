@@ -61,79 +61,140 @@ class TestAll(TestCase):
             display=inch15,
             price=29900
             )
-
+        userun_1.favorite.add(Acer_Nitro5)
+    
+    #เข้าหน้าindex   
     def test_index(self):
         c = Client()
         response = c.get('/')
         self.assertEqual( response.status_code,200)
-
+        self.assertTemplateUsed(response ,'notebook/index.html')
+    
+    #เข้าหน้าindex_url
     def test_index_url(self):
         c = Client()
         response = c.get(reverse('index'))
         self.assertEqual( response.status_code,200)
         self.assertTemplateUsed(response ,'notebook/index.html')
-
-    def test_login(self):
-        c = Client()
-        response = c.get("/login")
-        self.assertEqual( response.status_code,200)
-        self.assertTemplateUsed(response ,'notebook/login.html')
-    def test_login(self):
-        c = Client()
-        response = c.get(reverse("login"))
-        self.assertEqual( response.status_code,200)
-        self.assertTemplateUsed(response ,'notebook/login.html')
     
+    #กดlogin(เข้าระบบได้)
+    def test_login_url(self):
+        c = Client()
+        response = c.post("/login",data={'username':'eknarin@gmail.com','password':'123456tu'})
+        self.assertEqual(response.status_code,302)
+    
+    #กดlogin(addfail)
+    def test_login_url_fail(self):
+        c = Client()
+        response = c.post("/login",data={'username':'eknarin@gmail.com','password':'123456'})
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'notebook/login.html')
+    
+    #กดlogin_page(เข้าระบบได้ได้)
+    def test_login(self):
+        c = Client()
+        response = c.post(reverse('login'),data={'username':'eknarin@gmail.com','password':'123456tu'})
+        self.assertEqual(response.status_code,302)
+    
+    #กดloginโดยไม่post
+    def test_login_notpost(self):
+        c = Client()
+        response = c.get(reverse('login'))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'notebook/login.html')
+
+    #กดlogin(fail)เพราะซ้ำ
+    def test_login_fail(self):
+        c = Client()
+        response = c.post(reverse('login'),data={'username':'eknarin@gmail.com','password':'123456'})
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'notebook/login.html')
+    
+    #กดไปหน้า login
     def test_Loginpage(self):
         c = Client()
         response = c.get("/login_logoutpage")
         self.assertEqual( response.status_code,200)
         self.assertTemplateUsed(response ,'notebook/login.html')
     
+    #กดไปหน้า login แบบreverse
     def test_Loginpage_url(self):
         c = Client()
         response = c.get(reverse('login_logoutpage'))
         self.assertEqual( response.status_code,200)
         self.assertTemplateUsed(response ,'notebook/login.html')
-
+    
+    #กดlogout
     def test_Logoutpage(self):
         c = Client()
         c.login(username='mata@gmail.com', password='123456tu')
         response = c.get("/login_logoutpage")
         self.assertEqual(response.status_code,302)
-
+    
+    #กด logout แบบreverse
     def test_Logoutpage_url(self):
         c = Client()
         c.login(username='mata@gmail.com', password='123456tu')
         response = c.get(reverse('login_logoutpage'))
         self.assertEqual(response.status_code,302)
-
+    
+    #ไปหน้าregisterแบบ reverse
     def test_register_url(self):
         c = Client()
         response = c.get(reverse('register'))
         self.assertEqual( response.status_code,200)
         self.assertTemplateUsed(response ,'notebook/register.html')
-
+    
+    #ไปหน้าregister
     def test_register(self):
         c = Client()
         response = c.get('/register')
         self.assertEqual( response.status_code,200)
         self.assertTemplateUsed(response ,'notebook/register.html')
     
+    #ไปหน้าregisterแบบไม่post
+    def test_register_nopost(self):
+        c = Client()
+        response=c.get(reverse('addregister'))
+        self.assertEqual( response.status_code,200)
+        self.assertTemplateUsed(response ,'notebook/register.html')
+
     def test_addregister_url(self):
         c = Client()
-        response = c.get(reverse('addregister'))
+        response = c.post(reverse('addregister'),data={"firstname":"aa","lastname":"bb","email":"aa@bb.com","password":"123456","confirmpassword":"123456"})
         self.assertEqual( response.status_code,200)
+        self.assertEqual(UserUn.objects.all().count() , 4)
+        self.assertTemplateUsed(response ,'notebook/login.html')
     
-    def test_addregister_url(self):
-        c = Client()
-        response = c.get(reverse('addregister'))
-        self.assertEqual( response.status_code,200)
     def test_addregister(self):
         c = Client()
-        response = c.get('/addregister')
+        response = c.post('/addregister',data={"firstname":"a1","lastname":"b2","email":"a1@b2.com","password":"123456","confirmpassword":"123456"})
+        self.assertEqual(UserUn.objects.all().count() , 4)
         self.assertEqual( response.status_code,200)
+        self.assertTemplateUsed(response ,'notebook/login.html')
 
+
+    def test_addregister_url_fail(self):
+        c = Client()
+        response = c.post(reverse('addregister'),data={"firstname":"","lastname":"","email":"aa@bb.com","password":"123456","confirmpassword":"123456"})
+        self.assertEqual( response.status_code,200)
+        self.assertTemplateUsed(response ,'notebook/register.html')
+        self.assertEqual(UserUn.objects.all().count() , 3)
+    
+    def test_addregister_url_fail_2(self):
+        c = Client()
+        response = c.post(reverse('addregister'),data={"firstname":"eknarin","lastname":"lerdnuntawat","email":"eknarin@gmail.com","password":"123456tu","confirmpassword":"123456tu"})
+        self.assertEqual( response.status_code,200)
+        self.assertTemplateUsed(response ,'notebook/register.html')
+        self.assertEqual(UserUn.objects.all().count() , 3)
+    
+    def test_addregister_fail(self):
+        c = Client()
+        response = c.post('/addregister',data={"firstname":"","lastname":"","email":"aa@bb.com","password":"123456","confirmpassword":"123456"})
+        self.assertEqual( response.status_code,200)
+        self.assertEqual(UserUn.objects.all().count() , 3)
+        self.assertTemplateUsed(response ,'notebook/register.html')
+        
     def test_about_url(self):
         c = Client()
         response = c.get(reverse('about'))
@@ -145,13 +206,7 @@ class TestAll(TestCase):
         response = c.get('/about')
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response ,'notebook/about.html')
-    
-    def test_about(self):
-        c = Client()
-        response = c.get('/about')
-        self.assertEqual(response.status_code,200)
-        self.assertTemplateUsed(response ,'notebook/about.html')
-    
+  
     def test_favorite_url(self):
         c = Client()
         response = c.get(reverse('favorite'))
@@ -171,3 +226,15 @@ class TestAll(TestCase):
         c = Client()
         response = c.get('/notebook')
         self.assertEqual(response.status_code,302)
+    
+    def test_compare(self):
+        c = Client()
+        response = c.get('/compare')
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response ,'notebook/compare.html')
+    
+    def test_calcompare(self):
+        c = Client()
+        response = c.post('/calcompare',data={'notebook_id':1})
+        self.assertEqual(response.status_code,302)
+    

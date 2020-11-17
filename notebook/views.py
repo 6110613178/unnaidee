@@ -58,7 +58,7 @@ def addregister(request):
                 return render(request,'notebook/register.html',{'message':"email are used"})
         else:
             b["message"]: "Confirm Password not correct"
-    return render(request,'notebook/register.html',b)
+    return render(request,'notebook/register.html')
 
 def login_logoutpage(request):
     if request.user.is_authenticated:
