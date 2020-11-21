@@ -8,6 +8,7 @@ class NotebookData(models.Model):
     typeNotebook =models.CharField(max_length=64)
     series = models.CharField(max_length=64)
     date = models.DateField()
+    weight = models.CharField(max_length=64)
     def __str__(self):
         return f"brand = {self.brand} : descrition= {self.descrition} : type = {self.typeNotebook} : s = {self.series} : date = {self.date}"
     def getsearch(self):
@@ -66,6 +67,8 @@ class NoteBook (models.Model):
     ram = models.ForeignKey(Ram,on_delete= models.CASCADE)
     display = models.ForeignKey(Display,on_delete= models.CASCADE)
     price = models.PositiveIntegerField()
+    star = models.PositiveSmallIntegerField(default = 1)
+    OStype = models.CharField(max_length = 64,default="") 
     
     def __str__(self):
         return f" data :: {self.notebookdata.brand} {self.notebookdata.series} | cpu :: {self.cpu.brand} {self.cpu.name} | gpu :: {self.gpu.brand} {self.gpu.name} | rom :: {self.rom.capacity} ram :: {self.ram.capacity}"

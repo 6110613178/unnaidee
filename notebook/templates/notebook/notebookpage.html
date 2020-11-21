@@ -9,12 +9,19 @@
         <!-- row -->
 
             <h1>{{notebook.notebookdata.brand}}  {{notebook.notebookdata.series}} </h1>
-            <h2> {{notebook.notebookdata.descrition}} </h2>
-            <p>{{ notebook.notebookdata.typeNotebook}} <br>
-                {{ notebook.notebookdata.date}}<br>
-                {{ notebook.gpu.brand}}
-
+            <p> Size : {{ notebook.display.size}} inch <br>
+                Display : {{ notebook.display.resolution}} <br>
+                CPU : {{ notebook.cpu.brand}} {{ notebook.cpu.name}} <br>
+                GPU : {{ notebook.gpu.brand}} {{ notebook.gpu.name}} <br>
+                Ram : {{ notebook.ram.capacity}} <br>
+                Rom : {{ notebook.rom.capacity}} <br>
+                OS  : {{ notebook.OStype}} <br>
+                Weight : {{ notebook.notebookdata.weight}} Kg <br>
+                TypeNotebook : {{ notebook.notebookdata.typeNotebook}} <br>
+                FirstSellDate : {{ notebook.notebookdata.date}} <br>
+                Price : {{ notebook.price }} Baht <br>
             </p>
+            <h3> {{notebook.notebookdata.descrition}} </h3>
     </div>
     <!-- /container -->
 </div>
