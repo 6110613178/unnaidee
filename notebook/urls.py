@@ -8,13 +8,14 @@ urlpatterns = [
     path('login_logoutpage',views.login_logoutpage, name='login_logoutpage'),
     path('login',views.login_view, name='login'),
     path('compare',views.compare, name='compare'),
-     path('calcompare',views.calcompare, name='calcompare'),
+    path('calcompare',views.calcompare, name='calcompare'),
     path('removecompare',views.removecompare, name='removecompare'),
     path('mark',views.mark, name='mark'),
     path('favorite',views.favorite, name='favorite'),
     path('unmarkfav',views.unmarkfav, name='unmarkfav'),
     path('notebook',views.notebook_page,name = 'notebook'),
     path('search',views.index, name='search'),
-    path('filter',views.index,name = 'filter')
+    path('filter',views.index,name = 'filter'),
+    path('sort',views.index,name = 'sort')
 
 ]

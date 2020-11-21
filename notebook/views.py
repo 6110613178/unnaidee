@@ -7,7 +7,8 @@ from django.http import HttpResponseRedirect
 
 
 def layout(request):
-    typeNotebook = ["Gaming","Gaming , Working","Working & Light","Toughness & Working"]
+    typeNotebook = ["Gaming", "Gaming , Working", "Working & Light", "Toughness & Working"]
+    sortNotebook = ["Newest", "Oldest", "Highest price", "Lowest price"]
     if request.user.is_authenticated:
         user1 = UserUn.objects.get(email = request.user.username)
         countfav = user1.favorite.all().count()
@@ -15,9 +16,10 @@ def layout(request):
             "name" : user1,
             "log": "logout",
             "countfav": countfav,
-            "typeNotebook":typeNotebook
+            "typeNotebook": typeNotebook,
+            "sortNotebook": sortNotebook
             }
-    return{"log": "login","typeNotebook":typeNotebook}
+    return{"log": "login", "typeNotebook": typeNotebook, "sortNotebook": sortNotebook}
 
 def index(request):
     
@@ -49,6 +51,22 @@ def index(request):
             notebookTypes = NoteBook.objects.filter(notebookdata__typeNotebook = notebookFilter)
             b['notebookall'] = notebookTypes
             return render(request,'notebook/index.html',b)
+
+        elif f == "sort":
+            notebookSort = request.POST['sortNotebook']
+            if notebookSort == "Newest":
+                notebookSorted = NoteBook.objects.all().order_by('-notebookdata__date')
+                b['notebookall'] = notebookSorted
+            if notebookSort == "Oldest":
+                notebookSorted = NoteBook.objects.all().order_by('notebookdata__date')
+                b['notebookall'] = notebookSorted
+            elif notebookSort == "Highest price":
+                notebookSorted = NoteBook.objects.all().order_by('-price')
+                b['notebookall'] = notebookSorted
+            elif notebookSort == "Lowest price":
+                notebookSorted = NoteBook.objects.all().order_by('price')
+                b['notebookall'] = notebookSorted
+            return render(request, 'notebook/index.html',b)
 
     else :
         b['notebookall']= notebookall
