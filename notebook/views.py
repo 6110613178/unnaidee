@@ -7,29 +7,32 @@ from django.http import HttpResponseRedirect
 
 
 def layout(request):
+    typeNotebook = ["Gaming","Gaming , Working","Working & Light","Toughness & Working"]
     if request.user.is_authenticated:
         user1 = UserUn.objects.get(email = request.user.username)
         countfav = user1.favorite.all().count()
         return {
             "name" : user1,
             "log": "logout",
-            "countfav": countfav
+            "countfav": countfav,
+            "typeNotebook":typeNotebook
             }
-    return{"log": "login"}
+    return{"log": "login","typeNotebook":typeNotebook}
 
 def index(request):
+    
     notebookall = NoteBook.objects.all()
     b = layout(request)
     if request.method == 'POST':
         f= request.POST["form"]
         if f == "search":
-            input = request.POST['input']
-            input = input.lower()
+            input1 = request.POST['input1']
+            input1 = input1.lower()
             notebookall = NoteBook.objects.all()
             notebooklist = []
             c = 0
             for notebook in notebookall:
-                if notebook.search(input):
+                if notebook.search(input1):
                     notebooklist.append(notebook)
                     c = c+1
             b['notebookall']= notebooklist 
@@ -39,6 +42,12 @@ def index(request):
                 b['item'] = "found "+str(c)+" item"
             else :
                 b['item'] = "found "+str(c)+" items"      
+            return render(request,'notebook/index.html',b)
+        
+        elif f == "filter":
+            notebookFilter = request.POST['typeNotebook']
+            notebookTypes = NoteBook.objects.filter(notebookdata__typeNotebook = notebookFilter)
+            b['notebookall'] = notebookTypes
             return render(request,'notebook/index.html',b)
 
     else :
@@ -140,7 +149,7 @@ def favorite(request):
         b = layout(request)
         b['notebookallfav']= notebookallfav
         return render(request,'notebook/favorite.html',b)
-    return HttpResponseRedirect(reverse('index'))
+    
 
 def mark(request):
     if request.method == "POST":
@@ -178,18 +187,3 @@ def notebook_page(request):
         b['notebook']= notebook
         return render(request,'notebook/notebookpage.html',b)
     return HttpResponseRedirect(reverse('index'))
-
-def search(request):
-    b = layout(request)
-    input = request.POST['input']
-    input = input.lower()
-    notebookall = NoteBook.objects.all()
-    notebooklist = []
-    c = 0
-    for notebook in notebookall:
-        if notebook.search(input):
-            notebooklist.append(notebook)
-            c = c+1
-    b['notebooklist']= notebooklist 
-    b['c'] = c       
-    return render(request,'notebook/index.html',b)

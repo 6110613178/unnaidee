@@ -56,7 +56,7 @@
 				<div class="col-md-2">
 					<div class="header-logo">
 						<a href="{% url 'index' %}" class="logo">
-							<img src="{% static 'img/logo7.png'%}" alt="" >
+							<img src="{% static 'img/logo7.png'%}" alt="">
 						</a>
 					</div>
 				</div>
@@ -67,13 +67,7 @@
 					<div class="header-search">
 						<form action="{% url 'index' %}" method="POST">
 							{% csrf_token %}
-							<select class="input-select">
-								<option value="0">All Categories</option>
-								<option value="1">Category 01</option>
-								<option value="1">Category 02</option>
-							</select>
-
-							<input class="input" placeholder="Search here" name="input">
+							<input class="input" placeholder="Search here" name="input1">
 							<button value="search" name="form" class="search-btn">Search</button>
 						</form>
 					</div>
@@ -89,7 +83,6 @@
 								<i class="fa fa-heart-o"></i>
 								<span>Your favorite</span>
 								{% if countfav %}
-								
 								<div class="qty"> {{countfav}} </div>
 								{% endif %}
 							</a>
@@ -118,58 +111,71 @@
 					<li class="active"><a href="{% url 'index'%}">Home</a></li>
 					<li><a href="{% url 'compare' %}">Compare</a></li>
 					<li><a href="{% url 'favorite' %}">favorite</a></li>
-
 				</ul>
+				<div class="dropdown">
+					<button class="dropbtn">Filter</button>
+					<div class="dropdown-content">
+						{% for type in typeNotebook %}
+						<form id="{{type}}" action="{% url 'filter' %}" method="POST">
+							{%csrf_token%}
+							<input type="hidden" value="filter" name="form">
+							<input type="hidden" value="{{type}}" name="typeNotebook">
+							<a href="#" onclick="document.getElementById('{{type}}').submit();">{{type}}</a>
+						</form>
+						{% endfor %}
+					</div>
+				</div>
 				<!-- /NAV -->
 			</div>
 			<!-- /responsive-nav -->
 		</div>
 		<!-- /container -->
 	</nav>
-	<body>
-		{% block content %}
-	
-		{% endblock %}
-	</body>
-	<!-- /NAVIGATION -->
-	<!-- FOOTER -->
-	<footer id="footer">
-		<!-- top footer -->
-		<div class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-3 col-xs-6">
-						<div class="footer">
-							<h3 class="footer-title">About Us</h3>
-							<ul class="footer-links">
-								<li><a href="{% url 'about' %}"><i class="fa "></i>ABOUT US</a></li>
-							</ul>
-						</div>
+
+<body>
+	{% block content %}
+
+	{% endblock %}
+</body>
+<!-- /NAVIGATION -->
+<!-- FOOTER -->
+<footer id="footer">
+	<!-- top footer -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-3 col-xs-6">
+					<div class="footer">
+						<h3 class="footer-title">About Us</h3>
+						<ul class="footer-links">
+							<li><a href="{% url 'about' %}"><i class="fa "></i>ABOUT US</a></li>
+						</ul>
 					</div>
 				</div>
-				<!-- /row -->
 			</div>
-			<!-- /container -->
+			<!-- /row -->
 		</div>
-		<!-- /top footer -->
+		<!-- /container -->
+	</div>
+	<!-- /top footer -->
 
-		<!-- bottom footer -->
-		<div id="bottom-footer" class="section">
+	<!-- bottom footer -->
+	<div id="bottom-footer" class="section">
 
-		</div>
-		<!-- /bottom footer -->
-	</footer>
-	<!-- /FOOTER -->
+	</div>
+	<!-- /bottom footer -->
+</footer>
+<!-- /FOOTER -->
 
-	<!-- jQuery Plugins -->
-	<script src="{% static 'js/jquery.min.js'%}"></script>
-	<script src="{% static 'js/bootstrap.min.js'%}"></script>
-	<script src="{% static 'js/slick.min.js'%}"></script>
-	<script src="{% static 'js/nouislider.min.js' %}"></script>
-	<script src="{% static 'js/jquery.zoom.min.js' %}"></script>
-	<script src="{% static 'js/main.js' %}"></script>
+<!-- jQuery Plugins -->
+<script src="{% static 'js/jquery.min.js'%}"></script>
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script src="{% static 'js/slick.min.js'%}"></script>
+<script src="{% static 'js/nouislider.min.js' %}"></script>
+<script src="{% static 'js/jquery.zoom.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 
 
 

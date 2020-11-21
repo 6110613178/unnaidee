@@ -9,7 +9,7 @@ class NotebookData(models.Model):
     series = models.CharField(max_length=64)
     date = models.DateField()
     def __str__(self):
-        return f" brand = {self.brand} : descrition= {self.descrition} : type =  {self.typeNotebook} : s = {self.series} :  date = {self.date}"
+        return f"brand = {self.brand} : descrition= {self.descrition} : type = {self.typeNotebook} : s = {self.series} : date = {self.date}"
     def getsearch(self):
         return f"{self.brand}{self.descrition}{self.typeNotebook}{self.series}{self.date}"
    
@@ -88,9 +88,7 @@ class UserUn(models.Model):
     
     def __str__(self):
         return f"{self.firstname} {self.lastname} Email:{self.email}"
-    def getsearch(self):
-        return f"{self.firstname}{self.lastname}{self.email}"
-
+    
 class Compare(models.Model):
     allstar = models.FloatField()
     notebook = models.OneToOneField(NoteBook,on_delete= models.CASCADE)
