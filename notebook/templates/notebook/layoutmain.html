@@ -125,6 +125,19 @@
 						{% endfor %}
 					</div>
 				</div>
+				<div class="dropdown">
+					<button class="dropbtn">Sort</button>
+					<div class="dropdown-content">
+						{% for sort in sortNotebook %}
+						<form id="{{sort}}" action="{% url 'sort' %}" method="POST">
+							{%csrf_token%}
+							<input type="hidden" value="sort" name="form">
+							<input type="hidden" value="{{sort}}" name="sortNotebook">
+							<a href="#" onclick="document.getElementById('{{sort}}').submit();">{{sort}}</a>
+						</form>
+						{% endfor %}
+					</div>
+				</div>
 				<!-- /NAV -->
 			</div>
 			<!-- /responsive-nav -->
