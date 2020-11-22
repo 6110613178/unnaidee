@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 
 
 def layout(request):
-    typeNotebook = ["Gaming", "Gaming , Working", "Working & Light", "Toughness & Working"]
+    typeNotebook = ["Gaming", "Working & Light", "Toughness & Working"]
     sortNotebook = ["Newest", "Oldest", "Highest price", "Lowest price"]
     if request.user.is_authenticated:
         user1 = UserUn.objects.get(email = request.user.username)
