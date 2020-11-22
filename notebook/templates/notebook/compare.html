@@ -33,13 +33,17 @@
                 <img src="../../static/img/Nitro 5.jpg" alt="notebook{{l.notebook_id}}">
             </div>
             <div class="card-body tex">
-                <p class="card-text">PRICE : {{l.notebook.price}} Baht</p>
+                <p class="card-text">DISPLAY : {{l.notebook.display.size}} Inch</p>
+                <p class="card-text">RESOLUTION : {{l.notebook.display.resolution}}</p>
                 <p class="card-text">CPU : {{l.notebook.cpu.brand}} {{l.notebook.cpu.name}}</p>
                 <p class="card-text">GPU : {{l.notebook.gpu.brand}} {{l.notebook.gpu.name}}</p>
                 <p class="card-text">RAM : {{l.notebook.ram.capacity}} GB</p>
-                <p class="card-text">ROM : {{l.notebook.rom.capacity}} GB</p>
-                <p class="card-text">DISPLAY : {{l.notebook.display.size}} Inch</p>
-                <p class="card-text">RESOLUTION : {{l.notebook.display.resolution}}</p>
+                <p class="card-text">ROM : {{l.notebook.rom.capacity}} </p>
+                <p class="card-text">OS : {{l.notebook.OStype}}</p>
+                <p class="card-text">Weight : {{l.notebook.notebookdata.weight}} Kg</p>
+                <p class="card-text">TYPE : {{ l.notebook.notebookdata.typeNotebook}} </p>
+                <p class="card-text">SELLDATE : {{ l.notebook.notebookdata.date}}</p>
+                <p class="card-text">PRICE : {{l.notebook.price}} Baht</p> 
                 <p class="card-text">SCORE : {{l.allstar}}/5.0 star</p>
             </div>
         </div>
