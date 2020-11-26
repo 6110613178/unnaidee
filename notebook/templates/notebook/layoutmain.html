@@ -39,8 +39,14 @@
 				<li><a href="#"><i class="fa "></i> email :{{name.email}}</a></li>
 			</ul>
 			<ul class="header-links pull-right">
+				
 				<li><a href="{% url 'login_logoutpage' %}"><i class="fa fa-dollar"></i>{{log}}</a></li>
-				<li><a href="{% url 'register' %}"><i class="fa fa-user-o"></i>register</a></li>
+				{% if profile %}
+				<li><a href="{% url 'profile' %}"><i class="fa fa-user-o"></i>{{ profile }}</a></li>
+				{% endif%}
+				{% if register %}
+				<li><a href="{% url 'register' %}"><i class="fa fa-user-o"></i>{{register}}</a></li>
+				{% endif%}
 			</ul>
 		</div>
 	</div>

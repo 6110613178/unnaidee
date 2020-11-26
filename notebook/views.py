@@ -17,9 +17,10 @@ def layout(request):
             "log": "logout",
             "countfav": countfav,
             "typeNotebook": typeNotebook,
-            "sortNotebook": sortNotebook
+            "sortNotebook": sortNotebook,
+            "profile" : "profile"
             }
-    return{"log": "login", "typeNotebook": typeNotebook, "sortNotebook": sortNotebook}
+    return{"log": "login","register":"register" ,"typeNotebook": typeNotebook, "sortNotebook": sortNotebook}
 
 def index(request):
     
@@ -107,7 +108,7 @@ def addregister(request):
                 return render(request,'notebook/register.html',{'message':"email are used"})
         else:
             b["message"]: "Confirm Password not correct"
-    return render(request,'notebook/register.html')
+    return render(request,'notebook/register.html',b)
 
 def login_logoutpage(request):
     if request.user.is_authenticated:
@@ -205,3 +206,53 @@ def notebook_page(request):
         b['notebook']= notebook
         return render(request,'notebook/notebookpage.html',b)
     return HttpResponseRedirect(reverse('index'))
+
+def profile(request):
+    user = UserUn.objects.get(email = request.user.username)    
+    b = {"user" : user}
+    return render(request,'notebook/profile.html', b)
+
+def editprofile(request):
+    user = UserUn.objects.get(email = request.user.username)     
+    b = {}
+    b['firstname']=user.firstname
+    b['lastname']=user.lastname
+    b['email']=user.email
+    return render(request,'notebook/editprofile.html', b)
+
+def editprofilevalue(request):
+    email = request.user.username
+    firstname = request.POST['firstname']
+    lastname = request.POST['lastname']
+    password = request.POST['password']
+    newpassword = request.POST['newpassword']
+    confirmnewpassword = request.POST['confirmnewpassword']
+    obj = UserUn.objects.get(email = email)
+    obj.firstname = firstname
+    obj.lastname = lastname
+    b = {}
+    if obj.password == password:
+        if newpassword == confirmnewpassword:
+            if newpassword =='':
+                obj.save()
+            else:     
+                obj.password = newpassword
+                obj.save()
+            return redirect('profile')
+        else:
+            b['message'] = "The New Password and Confirm New Password don't match!"
+            b['firstname']=firstname
+            b['lastname']=lastname
+            b['email']=email
+            return render(request,'notebook/editprofile.html', b)
+    else:
+        if password == '':
+            b['message'] = "Please enter your password !"
+        else:
+            b['message'] = "Password is incorrect !"
+        b['firstname']=firstname
+        b['lastname']=lastname
+        b['email']=email
+        return render(request,'notebook/editprofile.html', b)
+
+

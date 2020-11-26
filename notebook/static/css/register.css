@@ -37,7 +37,7 @@ h2 {
 
 .form-control {
   margin-bottom: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 0;
   position: relative;
 }
 
@@ -50,7 +50,7 @@ h2 {
 .form-control h5 {
   color: rgb(250, 7, 7);
   display: block;
-  margin-bottom: 5px;
+  margin: 5px 0;
 }
 
 .form-control input {

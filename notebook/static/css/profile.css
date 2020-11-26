@@ -1,0 +1,24 @@
+.cancelbtn {
+    padding: 0px 15px;
+}
+
+body {
+    background-image: url(../../static/img/background.jpg);
+    font-family: 'Open Sans', sans-serif;
+
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #ffffff;
+    margin-top: 50px;
+    border-radius: 20px;
+    padding: 20px;
+    -webkit-box-shadow: 9px 7px 23px 11px rgba(77, 77, 77, 1);
+    -moz-box-shadow: 9px 7px 23px 11px rgba(77, 77, 77, 1);
+    box-shadow: 9px 7px 23px 11px rgba(77, 77, 77, 1);
+
+}
