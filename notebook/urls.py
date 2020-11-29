@@ -20,6 +20,17 @@ urlpatterns = [
     path('profile',views.profile,name = 'profile'),
     path('editprofile',views.editprofile,name = 'editprofile'),
     path('editprofilevalue',views.editprofilevalue,name = 'editprofilevalue'),
+    path('add',views.add,name = 'add'),
+    path('addnotebook',views.addnotebook, name = 'addnotebook'),
+    path('showadmin',views.showadmin, name = 'showadmin'),
+    path('adddatanotebook',views.adddatanotebook, name = 'adddatanotebook'),
+    path('addcpu',views.addcpu, name = 'addcpu'),
+    path('addgpu',views.addgpu, name = 'addgpu'),
+    path('addrom',views.addrom, name = 'addrom'),
+    path('addram',views.addram, name = 'addram'),
+    path('adddisplay',views.adddisplay, name = 'adddisplay'),
+    path('deletenotebook',views.deletenotebook, name = 'deletenotebook'),
+
 
 
 ]

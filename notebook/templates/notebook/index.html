@@ -18,8 +18,9 @@
 
 					<input type="hidden" value="{{notebook.id}}" name="notebook_id">
 					<a href="#" onclick="document.getElementById('form-id_{{notebook.id}}').submit();">
-						
-						id : {{ notebook.id}} <br>
+
+						<img src="https://drive.google.com/uc?export=view&id={{notebook.notebookdata.img}}" class="avatar img-circle" alt="avatar" width="200px" height="200px">
+						 <br>
 						Brand : {{ notebook.notebookdata.brand}} <br>
 						Series : {{ notebook.notebookdata.series}}<br>
 						Descrition : {{notebook.notebookdata.descrition}}<br>
@@ -32,7 +33,7 @@
 				</form>
 				<form action="{% url 'mark' %}" method="POST">
 					{%csrf_token%}
-					<button name="id" value="{{notebook.id}}" type='submit'> Add to
+					<button class="btn btn-danger" name="id" value="{{notebook.id}}" type='submit'> Add to
 						Favorite</button>
 				</form>
 			</div>

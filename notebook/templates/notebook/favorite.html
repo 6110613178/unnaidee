@@ -14,19 +14,21 @@
 					{%csrf_token%}
 					<input type="hidden" value="{{notebook.id}}" name="notebook_id">
 					<a href="#" onclick="document.getElementById('form-id_{{notebook.id}}').submit();">
-						
-						id : {{ notebook.id}} <br>
-						Brand : {{ notebook.notebookdata.brand}} <br>
-						Series : {{ notebook.notebookdata.series}}<br>
-						Descrition : {{notebook.notebookdata.descrition}}<br>
-						TypeNotebook : {{notebook.notebookdata.typeNotebook}}<br>
+						<img src="https://drive.google.com/uc?export=view&id={{notebook.notebookdata.img}}" class="avatar img-circle" alt="avatar" width="200px" height="200px">
+						 <br>
+						 Brand : {{ notebook.notebookdata.brand}} <br>
+						 Series : {{ notebook.notebookdata.series}}<br>
+						 Descrition : {{notebook.notebookdata.descrition}}<br>
+						 TypeNotebook : {{notebook.notebookdata.typeNotebook}}<br>
+						 Price : {{notebook.price}} Bath<br>
+						 Date : {{notebook.notebookdata.date}}<br>
 
 					</a>
 					
 				</form>
-				<form action="{% url 'unmarkfav' %}" method="POST">
+				<form  action="{% url 'unmarkfav' %}" method="POST">
 					{%csrf_token%}
-					<button name="id" value="{{notebook.id}}" type='submit'> Unfavorite </button>
+					<button class="btn btn-danger" name="id" value="{{notebook.id}}" type='submit'> Unfavorite </button>
 				</form>
 			</div>
 			{% endfor %}

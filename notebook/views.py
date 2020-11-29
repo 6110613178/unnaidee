@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-
+from main import uploadFile
 
 def layout(request):
     typeNotebook = ["Gaming", "Working & Light", "Toughness & Working"]
@@ -123,6 +123,8 @@ def login_view(request):
         user = authenticate(request, username = username, password = password)
         if user is not None:
             login(request, user)
+            if request.user.is_superuser == 1:
+                return HttpResponseRedirect(reverse('showadmin'))
             return HttpResponseRedirect(reverse('index'))
         else:
             return render(request, "notebook/login.html", {
@@ -215,6 +217,7 @@ def profile(request):
 def editprofile(request):
     user = UserUn.objects.get(email = request.user.username)     
     b = {}
+    b['user'] = user
     b['firstname']=user.firstname
     b['lastname']=user.lastname
     b['email']=user.email
@@ -222,6 +225,7 @@ def editprofile(request):
 
 def editprofilevalue(request):
     email = request.user.username
+
     firstname = request.POST['firstname']
     lastname = request.POST['lastname']
     password = request.POST['password']
@@ -231,6 +235,7 @@ def editprofilevalue(request):
     obj.firstname = firstname
     obj.lastname = lastname
     b = {}
+    b['user'] = obj
     if obj.password == password:
         if newpassword == confirmnewpassword:
             if newpassword =='':
@@ -244,6 +249,7 @@ def editprofilevalue(request):
             b['firstname']=firstname
             b['lastname']=lastname
             b['email']=email
+
             return render(request,'notebook/editprofile.html', b)
     else:
         if password == '':
@@ -255,4 +261,167 @@ def editprofilevalue(request):
         b['email']=email
         return render(request,'notebook/editprofile.html', b)
 
+def add(request):
+    user = UserUn.objects.get(email = request.user.username)
+    img = request.FILES.get('img')
+    user.img = img
+    user.save()
+    name = request.FILES.get('img').name
+    url = "." + user.img.url
+    user.img = uploadFile(name,url)
+    user.save()
+    return redirect('profile')
 
+def addnotebook(request):
+    notebookdatas = NotebookData.objects.all()
+    gpus = Gpu.objects.all()
+    cpus = Cpu.objects.all()
+    rams = Ram.objects.all()
+    roms = Rom.objects.all()
+    displays = Display.objects.all()
+    b = {'notebookdatas':notebookdatas ,'gpus':gpus , 'cpus':cpus , 'rams':rams , 'roms': roms ,'displays': displays}
+    if request.method == 'POST':
+        notebookdata_id = request.POST['notebookdata']
+        gpu_id = request.POST['gpu']
+        cpu_id = request.POST['cpu']
+        ram_id = request.POST['ram']
+        rom_id = request.POST['rom']
+        display_id = request.POST['display']
+        price = request.POST['price']
+        if price!='' and notebookdata_id  != "" and gpu_id != "" and cpu_id != "" and ram_id != "" and rom_id != "" and display_id != "":
+            notebookdata = NotebookData.objects.get(id = notebookdata_id)
+            gpu = Gpu.objects.get(id = gpu_id)
+            cpu = Cpu.objects.get(id = cpu_id)
+            ram = Ram.objects.get(id = ram_id)
+            rom = Rom.objects.get(id = rom_id)
+            display = Display.objects.get(id = display_id)
+
+            n = NoteBook.objects.create(
+                notebookdata = notebookdata,
+                gpu = gpu,
+                cpu = cpu,
+                ram = ram,
+                rom = rom,
+                display = display,
+                price = int(price),
+                star = (gpu.star + cpu.star + ram.star + rom.star + display.star)/5
+                )
+            n.save()
+            return HttpResponseRedirect(reverse('showadmin'))
+        b['err'] = "invalid"
+        return render(request,'notebook/addnotebook.html',b)
+    return render(request,'notebook/addnotebook.html',b)
+
+def showadmin(request):
+    notebookall = NoteBook.objects.all()  
+    return render(request,'notebook/admin.html',{"notebookall": notebookall})
+
+def adddatanotebook(request):
+    if request.method == 'POST':
+        img = request.FILES.get('img')
+        brand = request.POST['brand']
+        descrition = request.POST['descrition']
+        typeNotebook = request.POST['typeNotebook']
+        series = request.POST['series']
+        date = request.POST['date']
+        weight = request.POST['weight']
+        if brand !='' and descrition != "" and typeNotebook != "" and series != "" and date != "" and weight != "" :
+            n = NotebookData.objects.create(img= img,
+                brand=brand,
+                descrition=descrition,
+                typeNotebook=typeNotebook,
+                series= series,
+                date= date,
+                weight=weight
+                )
+            n.save()
+            name = request.FILES.get('img').name
+            url = "." + n.img.url
+            n.img = uploadFile(name,url)
+            n.save()
+            return HttpResponseRedirect(reverse('showadmin'))
+        return render(request,'notebook/adddatanotebook.html',{"err":"invalid"})
+    return render(request,'notebook/adddatanotebook.html')
+
+def addcpu(request):
+    if request.method == 'POST':
+        brand = request.POST['brand']
+        name = request.POST['name']
+        star = request.POST['star']
+        if brand != "" and name != "" and star != "":
+            n = Cpu.objects.create(
+                brand= brand,
+                name= name,
+                star= star,
+            )
+            n.save()
+
+            return HttpResponseRedirect(reverse('showadmin'))
+        return render(request,'notebook/addcpu.html',{"err":"invalid"})
+    return render(request,'notebook/addcpu.html')
+
+def addgpu(request):
+    if request.method == 'POST':
+        brand = request.POST['brand']
+        name = request.POST['name']
+        star = request.POST['star']
+        if brand != "" and name != "" and star != "":
+            n = Gpu.objects.create(
+                brand= brand,
+                name= name,
+                star= star,
+            )
+            n.save()
+            return HttpResponseRedirect(reverse('showadmin'))
+        return render(request,'notebook/addgpu.html',{"err":"invalid"})
+    return render(request,'notebook/addgpu.html')
+
+def addrom(request):
+    if request.method == 'POST':
+        capacity = request.POST['capacity']
+        star = request.POST['star']
+        if capacity != "" and star != "":
+            n = Rom.objects.create(
+                capacity= capacity,
+                star= star,
+            )
+            n.save()
+            return HttpResponseRedirect(reverse('showadmin'))
+        return render(request,'notebook/addrom.html',{"err":"invalid"})
+    return render(request,'notebook/addrom.html')
+
+def addram(request):
+    if request.method == 'POST':
+        capacity = request.POST['capacity']
+        star = request.POST['star']
+        if capacity != "" and star != "":
+            n = Ram.objects.create(
+                capacity= capacity,
+                star= star,
+            )
+            n.save()
+            return HttpResponseRedirect(reverse('showadmin'))
+        return render(request,'notebook/addram.html',{"err":"invalid"})
+    return render(request,'notebook/addram.html')
+
+def adddisplay(request):
+    if request.method == 'POST':
+        size = request.POST['size']
+        resolution = request.POST['resolution']
+        star = request.POST['star']
+        if size != "" and star != "" and resolution != "" :
+            n = Display.objects.create(
+                size= size,
+                resolution = resolution,
+                star= star,
+            )
+            n.save()
+            return HttpResponseRedirect(reverse('showadmin'))
+        return render(request,'notebook/adddisplay.html',{"err":"invalid"})
+    return render(request,'notebook/adddisplay.html')
+
+def deletenotebook(request):
+    notebook_id = request.POST['id']
+    n = NoteBook.objects.get(id = notebook_id)
+    n.delete()
+    return HttpResponseRedirect(reverse('showadmin'))

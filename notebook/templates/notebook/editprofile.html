@@ -8,15 +8,19 @@
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">
-                <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+                <img src="https://drive.google.com/uc?export=view&id={{user.img}}" class="avatar img-circle"
+                    alt="avatar" width="200px" height="200px">
                 <h6>Upload a different photo...</h6>
-
-                <input type="file" class="form-control">
+                <form class="form-control" method="POST" enctype="multipart/form-data" action="{%url 'add'%}">
+                    {% csrf_token %}
+                    <input type="file" name="img">
+                    <input type="submit" value="submit">
+                </form>
             </div>
         </div>
 
         <!-- edit form column -->
-        
+
         <div class="col-md-9 personal-info">
             {% if message %}
             <div class="alert alert-info alert-dismissable">
@@ -81,5 +85,6 @@
         </div>
     </div>
     <hr>
+</div>
 
-    {% endblock %}
+{% endblock %}

@@ -25,6 +25,8 @@
 
 	<!-- Custom stlylesheet -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%} ">
+	<!-- Font Awesome Icon -->
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css'%}">
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,12 +37,14 @@
 	<div id="top-header">
 		<div class="container">
 			<ul class="header-links pull-left">
-				<li><a href="#"><i class="fa "></i> name : {{name.firstname}} {{name.lastname}}</a></li>
-				<li><a href="#"><i class="fa "></i> email :{{name.email}}</a></li>
+				{% if name %}
+				<li><a href="#"><i class="fa fa-user-o"></i> name : {{name.firstname}} {{name.lastname}}</a></li>
+				<li><a href="#"><i class="fa fa-envelope-o"></i> email :{{name.email}}</a></li>
+				{% endif%}
 			</ul>
 			<ul class="header-links pull-right">
 				
-				<li><a href="{% url 'login_logoutpage' %}"><i class="fa fa-dollar"></i>{{log}}</a></li>
+				<li><a href="{% url 'login_logoutpage' %}">{{log}}</a></li>
 				{% if profile %}
 				<li><a href="{% url 'profile' %}"><i class="fa fa-user-o"></i>{{ profile }}</a></li>
 				{% endif%}
@@ -69,7 +73,8 @@
 				<!-- /LOGO -->
 
 				<!-- SEARCH BAR -->
-				<div class="col-md-8">
+				<div class="col-md-9">
+					<center>
 					<div class="header-search">
 						<form action="{% url 'index' %}" method="POST">
 							{% csrf_token %}
@@ -77,11 +82,12 @@
 							<button value="search" name="form" class="search-btn">Search</button>
 						</form>
 					</div>
+				</center>
 				</div>
 				<!-- /SEARCH BAR -->
 
 				<!-- ACCOUNT -->
-				<div class="col-md-2 clearfix">
+				<div class="col-md-1 clearfix">
 					<div class="header-ctn">
 						<!-- Wishlist -->
 						<div>

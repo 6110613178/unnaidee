@@ -1,0 +1,33 @@
+{% extends 'notebook/layoutprofile.html' %}
+{% block content %}
+
+<div class="container">
+    <h1 class="admin">ADMIN PANGE</h1>
+    <a id="logout" href="{% url 'login_logoutpage' %}">logout</a>
+    <hr>
+    <ul class="manu">
+        <a href="{% url 'addnotebook'%}">notebook</a>
+        <a href="{% url 'adddatanotebook'%}">datanotebook</a>
+        <a href="{% url 'addcpu'%}">Cpu</a>
+        <a href="{% url 'addgpu'%}">Gpu</a>
+        <a href="{% url 'addrom'%}">rom</a>
+        <a href="{% url 'addram'%}">ram</a>
+        <a href="{% url 'adddisplay'%}">display</a>
+       
+    </ul>
+    <hr>
+
+
+
+
+    {% for notebook in notebookall%}
+    {{notebook}}
+    <form class="btn-del" action="{% url 'deletenotebook' %}" method="POST">
+        {%csrf_token%}
+        <button class="btn btn-primary" name="id" value="{{notebook.id}}" type='submit'> del</button>
+    </form>
+    <br>
+    <br>
+    {%endfor%}
+</div>
+{% endblock %}

@@ -9,6 +9,7 @@ class NotebookData(models.Model):
     series = models.CharField(max_length=64)
     date = models.DateField()
     weight = models.CharField(max_length=64)
+    img = models.ImageField(upload_to ='notebook/' , blank=True,null=True)
     def __str__(self):
         return f"brand = {self.brand} : descrition= {self.descrition} : type = {self.typeNotebook} : s = {self.series} : date = {self.date}"
     def getsearch(self):
@@ -88,6 +89,7 @@ class UserUn(models.Model):
     email = models.EmailField(max_length = 64)
     password = models.CharField(max_length = 32)
     favorite = models.ManyToManyField(NoteBook, related_name="userfavorite",blank=True)
+    img = models.ImageField(upload_to ='profile/' , blank=True,null=True)
     
     def __str__(self):
         return f"{self.firstname} {self.lastname} Email:{self.email}"

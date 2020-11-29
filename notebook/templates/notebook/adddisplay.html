@@ -1,0 +1,53 @@
+{% extends 'notebook/layoutprofile.html' %}
+{% block content %}
+
+<div class="container">
+    <h1>ADD DISPLAY</h1>
+    <hr>
+    <div class="row">
+        <div class="col-10">
+            {% if err %}
+            <div class="alert alert-info alert-dismissable">
+                <a class="panel-close close" data-dismiss="alert">×</a>
+                <i class="fa fa-coffee"></i>
+                {{err}}
+            </div>
+            {% endif %}
+            <h3>Personal info</h3>
+            <form class="" method="POST" enctype="multipart/form-data" action="{%url 'adddisplay'%}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">size:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text"  name="size">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">resolution:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text"  name="resolution">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">star:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text"  name="star">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="submit" class="btn btn-primary" value="Add">
+                    </div>
+                </div>
+            </form>
+            <a href="{% url 'showadmin'%}" >Home admin</a>
+        </div>
+
+
+
+    </div>
+    <hr>
+</div>
+
+{% endblock %}
