@@ -1092,13 +1092,14 @@ textarea.input {
 }
 
 .dropbtn {
+  border-radius: 5px;
   background-color: #f83a3a;
   color: white;
-  padding: 12px 16px ;
+  padding:  10px 15px ;
   font-size: 16px;
   border: none;
   cursor: pointer;
-  margin: 7.5px;
+  margin: 8px;
 }
 .dropdown {
   float: right;
