@@ -17,6 +17,7 @@ urlpatterns = [
     path('search',views.index, name='search'),
     path('filter',views.index,name = 'filter'),
     path('sort',views.index,name = 'sort'),
+    
     path('profile',views.profile,name = 'profile'),
     path('editprofile',views.editprofile,name = 'editprofile'),
     path('editprofilevalue',views.editprofilevalue,name = 'editprofilevalue'),
